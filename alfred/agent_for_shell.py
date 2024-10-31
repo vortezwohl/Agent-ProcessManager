@@ -2,13 +2,14 @@ import logging
 from typing import Callable
 
 from ceo import Agent
-from ceo.prompt import AnalyserPrompt, ExecutorPrompt, SchedulerPrompt, IntrospectionPrompt
+from ceo.prompt import AnalyserPrompt, ExecutorPrompt, IntrospectionPrompt
 from langchain_core.language_models import BaseChatModel
 
 log = logging.getLogger('ceo')
 log.setLevel(logging.INFO)
-NAME = 'process_manager'
-EXT_CTX = 'You are an operation system management expert, the taskmanager.exe is abandoned by us.'
+NAME = 'Alfred Pennyworth'
+EXT_CTX = ("You are an operation system management expert, the taskmanager.exe is abandoned by us. "
+           "Don't ever mention about taskmanager.exe.")
 DEFAULT_QUERY = 'Tell me who you are.'
 
 

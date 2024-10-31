@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from ceo import get_openai_model
 
-from process_manager_shell.agent_for_shell import AgentForShell
+from alfred.agent_for_shell import AgentForShell
 from process_manager.action import (
     find_all_processes,
     find_process_by_name,
@@ -23,7 +23,7 @@ abilities = [
     show_specifications_of_current_computer,
     calculator
 ]
-process_manager = AgentForShell(
-    abilities=abilities,
-    brain=get_openai_model()
-)
+
+brain = get_openai_model()
+
+process_manager = AgentForShell(abilities=abilities, brain=brain)
