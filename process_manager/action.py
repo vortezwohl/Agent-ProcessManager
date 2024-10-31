@@ -10,7 +10,7 @@ def calculator(expr: str) -> float | str:
         What does this function do: Calculates the result of a mathematical expression containing only constant numbers.
 
         This function takes a string representing a mathematical expression as input,
-        simplifies it using SymPy's simplify function, and returns the result as a float.
+        simplifies it, and returns the result as a float.
 
         Args:
             expr (str): A mathematical expression consisting of constant numbers !!!
@@ -25,7 +25,10 @@ def calculator(expr: str) -> float | str:
     expr = expr.replace(',', '')
     expr = expr.replace('_', '')
     try:
-        return sympy.simplify(expr, rational=None)
+        try:
+            return sympy.simplify(expr, rational=None)
+        except ValueError as ve:
+            return ve.__repr__()
     except sympy.SympifyError as se:
         return se.__repr__()
 
