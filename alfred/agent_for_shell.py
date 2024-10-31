@@ -14,6 +14,10 @@ DEFAULT_QUERY = 'Tell me who you are.'
 
 
 def _print(text: str):
+    if text.startswith('\n'):
+        text = text[1:]
+    if text.startswith('\r'):
+        text = text[1:]
     text = text.replace('{', '')
     text = text.replace('}', '')
     text = text.replace('\n', '')
