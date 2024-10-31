@@ -217,7 +217,7 @@ def kill_a_process_by_pid(pid: int) -> bool:
         If the process is successfully terminated, the function returns True. If the process
         does not exist or cannot be terminated, the function returns False.
 
-        If you don't know very clear about the pid of the process you are going to kill, then don't do anything.
+        If you don't know very clear about the pid of the process you are going to kill, then kill pid=(-1), okay?
 
         Args:
             pid (int): The Process ID of the process to be terminated.
@@ -225,7 +225,7 @@ def kill_a_process_by_pid(pid: int) -> bool:
         Returns:
             bool: True if the process was terminated successfully, False otherwise.
     """
-    if pid == 0:
+    if pid == 0 or pid == -1:
         return False
     try:
         process = psutil.Process(pid=pid)
