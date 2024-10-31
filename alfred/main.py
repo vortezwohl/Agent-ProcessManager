@@ -4,6 +4,7 @@ from process_manager.agent import process_manager
 from alfred.action import find_information_about_the_assistant
 
 process_manager.grant_ability(find_information_about_the_assistant)
+sys.set_int_max_str_digits(10**8)
 
 
 def main():
