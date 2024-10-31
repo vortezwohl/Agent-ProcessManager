@@ -12,6 +12,13 @@ EXT_CTX = 'You are an operation system management expert, the taskmanager.exe is
 DEFAULT_QUERY = 'Tell me who you are.'
 
 
+def _print(text: str):
+    text = text.replace('{', '')
+    text = text.replace('}', '')
+    text = text.replace('\n', '')
+    print(text, flush=True, end='\n')
+
+
 class AgentForShell(Agent):
     def __init__(self, abilities: list[Callable],
                  brain: BaseChatModel, name: str = NAME, query: str = DEFAULT_QUERY, ext_context: str = EXT_CTX):
@@ -28,9 +35,9 @@ class AgentForShell(Agent):
             action, params = analysing.invoke(self.model)
             executing = ExecutorPrompt(params=params, action=action, ext_context=self.ext_context)
             explain = executing.explain(self.model)
-            print(explain, flush=True)
+            _print(explain)
             result = executing.invoke(model=self.model)
-            print(result, flush=True)
+            _print(result)
             action_str = f'Action {self.act_count + 1}/{len(self.schedule)}: {result}'
             self.prev_results.append(action_str)
             self.act_count += 1
@@ -48,7 +55,7 @@ class AgentForShell(Agent):
             query=self.query_high_level,
             prev_results=self.prev_results,
             ext_context=self.ext_context).invoke(self.model))
-        print(f'\nConclusion: {response}')
+        _print(f'\nConclusion: {response}')
         log.debug(f'Conclusion: {response}')
         self.reposition()
         return f'{self.name}: {response}'
