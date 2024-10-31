@@ -37,8 +37,7 @@ def show_specifications_of_current_computer(**kwargs) -> str:
         You may need unit conversions before you generate the answers, don't forget to calculate them with "constant_calculate"
         For example: the unit Mhz should be converted to GHz, the unit Bytes may be converted to Gigabytes(GB)...
 
-        This function collects various hardware information using the psutil library,
-        including CPU details, memory, swap_memory, disk partitions, disk usage,
+        This function collects various hardware information, including CPU details, memory, swap_memory, disk partitions, disk usage,
         network I/O, and network interfaces.
 
         Args:
@@ -65,8 +64,8 @@ def find_all_processes(**kwargs) -> str:
         Retrieves and displays information about all running processes on the system,
         if you are not clear about which process you are looking for, you should retrieve all processes first.
 
-        This function iterates over all processes using psutil.process_iter, collecting
-        details such as process ID, name, user, status, creation time, CPU usage, and
+        This function iterates over all processes, collecting details
+        such as process ID, name, user, status, creation time, CPU usage, and
         memory usage. The collected data is stored in a dictionary and returned as a
         string representation.
 
@@ -75,10 +74,6 @@ def find_all_processes(**kwargs) -> str:
 
         Returns:
             str: A string representation of a dictionary containing process information.
-
-        Note:
-            This function assumes that psutil is installed and imported. It also assumes
-            that the system has permission to access process information.
     """
     all_processes = dict()
     for proc in psutil.process_iter(['pid', 'name', 'status']):
@@ -213,7 +208,7 @@ def kill_a_process_by_pid(pid: int) -> bool:
     """
         Attempts to terminate a process by its Process ID (PID).
 
-        This function uses the psutil library to access and terminate the specified process.
+        This function terminates the specified process.
         If the process is successfully terminated, the function returns True. If the process
         does not exist or cannot be terminated, the function returns False.
 
