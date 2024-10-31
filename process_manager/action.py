@@ -38,7 +38,7 @@ def show_specifications_of_current_computer(**kwargs) -> str:
         For example: the unit Mhz should be converted to GHz, the unit Bytes may be converted to Gigabytes(GB)...
 
         This function collects various hardware information using the psutil library,
-        including CPU details, memory, swap memory, disk partitions, disk usage,
+        including CPU details, memory, swap_memory, disk partitions, disk usage,
         network I/O, and network interfaces.
 
         Args:
