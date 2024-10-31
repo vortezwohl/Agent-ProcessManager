@@ -1,4 +1,5 @@
-from dotenv import load_dotenv
+import openai
+# from dotenv import load_dotenv
 from ceo import get_openai_model
 
 from alfred.agent_for_shell import AgentForShell
@@ -12,8 +13,6 @@ from process_manager.action import (
     calculator
 )
 
-load_dotenv()
-
 abilities = [
     find_all_processes,
     find_process_by_name,
@@ -24,6 +23,12 @@ abilities = [
     calculator
 ]
 
-brain = get_openai_model()
+process_manager = None
 
-process_manager = AgentForShell(abilities=abilities, brain=brain)
+try:
+    # load_dotenv()
+    brain = get_openai_model()
+    process_manager = AgentForShell(abilities=abilities, brain=brain)
+except openai.OpenAIError:
+    print('ERR: you must set "OPENAI_API_KEY" environment variable before you make demands on Alfred.')
+    exit(1)
