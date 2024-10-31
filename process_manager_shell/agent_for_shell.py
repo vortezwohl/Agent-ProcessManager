@@ -48,7 +48,7 @@ class AgentForShell(Agent):
             query=self.query_high_level,
             prev_results=self.prev_results,
             ext_context=self.ext_context).invoke(self.model))
-        print(response)
+        print(f'\nConclusion: {response}')
         log.debug(f'Conclusion: {response}')
         self.reposition()
         return f'{self.name}: {response}'
