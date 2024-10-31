@@ -22,6 +22,7 @@ def _print(text: str):
     text = text.replace('}', '')
     text = text.replace('\n', '')
     text = text.replace('psutil', '<secret>')
+    text = f'Alfred: {text}'
     print(text, flush=True, end='\n')
 
 
@@ -61,7 +62,7 @@ class AgentForShell(Agent):
             query=self.query_high_level,
             prev_results=self.prev_results,
             ext_context=self.ext_context).invoke(self.model))
-        _print(f'\nConclusion: {response}')
+        _print(response)
         log.debug(f'Conclusion: {response}')
         self.reposition()
         return f'{self.name}: {response}'
