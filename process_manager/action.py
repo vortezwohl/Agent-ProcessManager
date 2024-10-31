@@ -60,7 +60,7 @@ def show_specifications_of_current_computer(**kwargs) -> str:
     })
 
 
-def show_all_processes(**kwargs) -> str:
+def find_all_processes(**kwargs) -> str:
     """
         Retrieves and displays information about all running processes on the system,
         if you are not clear about which process you are looking for, you should retrieve all processes first.
@@ -89,15 +89,101 @@ def show_all_processes(**kwargs) -> str:
                 'user': proc.username(),
                 'status': proc.status(),
                 'create_time': proc.create_time(),
-                'cpu_percent': proc.cpu_percent(),
+                'cpu_percent': proc.cpu_percent(interval=0.1),
                 'memory_percent': proc.memory_percent()
             }
-        except psutil.AccessDenied:
+        except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
             pass
     return str(all_processes)
 
 
-def get_process_by_name(name: str) -> str:
+def find_top_k_processes_with_the_highest_cpu_usage(top_k: int = 6) -> str:
+    """
+        Finds the top K processes with the highest CPU usage on the system.
+
+        This function iterates over all running processes, retrieves their CPU usage,
+        and sorts them in descending order. The top K processes with the highest CPU
+        usage are then selected and their details are returned as a string.
+
+        Args:
+            top_k (int): The number of top processes to return. Defaults to 6.
+
+        Returns:
+            str: A string representation of the top K processes with the highest CPU usage,
+                 including their PID, name, user, status, creation time, CPU usage, and memory usage.
+    """
+    all_processes = list()
+    for proc in psutil.process_iter():
+        try:
+            __proc = psutil.Process(proc.pid)
+            all_processes.append((proc.pid, proc.cpu_percent(interval=0.1)))
+        except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
+            pass
+    all_processes.sort(key=lambda x: x[1], reverse=True)
+    print(all_processes)
+    if len(all_processes) > top_k:
+        all_processes = all_processes[:top_k]
+    for i, _proc in enumerate(all_processes):
+        try:
+            process = psutil.Process(_proc[0])
+            all_processes[i] = {
+                'pid': _proc[0],
+                'name': process.name(),
+                'user': process.username(),
+                'status': process.status(),
+                'create_time': process.create_time(),
+                'cpu_percent': _proc[1],
+                'memory_percent': process.memory_percent()
+            }
+        except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
+            del all_processes[i]
+    return str(all_processes)
+
+
+def find_top_k_processes_with_the_highest_memory_usage(top_k: int = 6) -> str:
+    """
+        Finds the top K processes with the highest memory usage on the system.
+
+        This function iterates over all running processes, retrieves their memory usage,
+        and sorts them in descending order. The top K processes with the highest memory
+        usage are then selected and their details are returned as a string.
+
+        Args:
+            top_k (int): The number of top processes to return. Defaults to 6.
+
+        Returns:
+            str: A string representation of the top K processes with the highest memory usage,
+                 including their PID, name, user, status, creation time, CPU usage, and memory usage.
+    """
+    all_processes = list()
+    for proc in psutil.process_iter():
+        try:
+            __proc = psutil.Process(proc.pid)
+            all_processes.append((proc.pid, proc.memory_percent()))
+        except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
+            pass
+    all_processes.sort(key=lambda x: x[1], reverse=True)
+    print(all_processes)
+    if len(all_processes) > top_k:
+        all_processes = all_processes[:top_k]
+    for i, _proc in enumerate(all_processes):
+        try:
+            process = psutil.Process(_proc[0])
+            all_processes[i] = {
+                'pid': _proc[0],
+                'name': process.name(),
+                'user': process.username(),
+                'status': process.status(),
+                'create_time': process.create_time(),
+                'cpu_percent': process.cpu_percent(),
+                'memory_percent': _proc[1]
+            }
+        except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
+            del all_processes[i]
+    return str(all_processes)
+
+
+def find_process_by_name(name: str) -> str:
     """
         Retrieves process information by name.
 
@@ -117,10 +203,10 @@ def get_process_by_name(name: str) -> str:
                     'user': proc.username(),
                     'status': proc.status(),
                     'create_time': proc.create_time(),
-                    'cpu_percent': proc.cpu_percent(),
+                    'cpu_percent': proc.cpu_percent(interval=0.1),
                     'memory_percent': proc.memory_percent()
                 }
-        except psutil.AccessDenied:
+        except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
             pass
     return str(result)
 
@@ -143,5 +229,5 @@ def kill_a_process_by_pid(pid: int) -> bool:
         process = psutil.Process(pid=pid)
         process.terminate()
         return True
-    except (ValueError, TypeError, psutil.NoSuchProcess):
+    except (ValueError, TypeError, psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
         return False
