@@ -13,7 +13,7 @@ from process_manager.action import (
 
 load_dotenv()
 
-actions = [
+abilities = [
     find_all_processes,
     find_process_by_name,
     find_top_k_processes_with_the_highest_cpu_usage,
@@ -22,4 +22,4 @@ actions = [
     show_specifications_of_current_computer,
     constant_calculate
 ]
-process_manager = Agent(actions, get_openai_model())
+process_manager = Agent(name='process_manager', abilities=abilities, brain=get_openai_model())
