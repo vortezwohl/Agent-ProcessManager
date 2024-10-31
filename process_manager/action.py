@@ -120,7 +120,6 @@ def find_top_k_processes_with_the_highest_cpu_usage(top_k: int = 6) -> str:
         except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
             pass
     all_processes.sort(key=lambda x: x[1], reverse=True)
-    print(all_processes)
     if len(all_processes) > top_k:
         all_processes = all_processes[:top_k]
     for i, _proc in enumerate(all_processes):
@@ -163,7 +162,6 @@ def find_top_k_processes_with_the_highest_memory_usage(top_k: int = 6) -> str:
         except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
             pass
     all_processes.sort(key=lambda x: x[1], reverse=True)
-    print(all_processes)
     if len(all_processes) > top_k:
         all_processes = all_processes[:top_k]
     for i, _proc in enumerate(all_processes):
