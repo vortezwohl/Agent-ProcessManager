@@ -29,6 +29,8 @@ try:
     # load_dotenv()
     brain = get_openai_model()
     process_manager = AgentForShell(abilities=abilities, brain=brain)
+except KeyboardInterrupt:
+    pass
 except openai.OpenAIError:
     print('ERR: you must set "OPENAI_API_KEY" environment variable before you make demands on Alfred.')
     exit(1)
