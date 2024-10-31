@@ -28,9 +28,15 @@ setuptools.setup(
     packages=setuptools.find_packages(where="."),
     python_requires=">=3.10",
     install_requires=[
-        'langchain-core>=0.3.13',
-        'langchain-openai>=0.2.3'
+        'psutil>=6.1.0',
+        'ceo-py>=0.6.0rc0',
+        'python-dotenv>=1.0.1',
+        'sympy>=1.13.3'
     ],
-    entry_points={},
+    entry_points={
+        'console_scripts': [
+            'alfred = alfred.main:main'
+        ]
+    },
     include_package_data=False
 )
