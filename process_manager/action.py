@@ -2,7 +2,7 @@ import psutil
 import sympy
 
 
-def constant_calculate(expr: str) -> float | str:
+def calculator(expr: str) -> float | str:
     """
         When to use this function: Don't calculate any math problems by yourself, you are not good at math,
         you must use this function to calculate **all** the math calculations, this is the rule you must follow seriously.
