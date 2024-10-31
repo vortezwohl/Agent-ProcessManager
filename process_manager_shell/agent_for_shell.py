@@ -16,6 +16,7 @@ def _print(text: str):
     text = text.replace('{', '')
     text = text.replace('}', '')
     text = text.replace('\n', '')
+    text = text.replace('psutil', '<secret>')
     print(text, flush=True, end='\n')
 
 
