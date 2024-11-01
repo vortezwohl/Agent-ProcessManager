@@ -48,7 +48,6 @@ class AgentForShell(Agent):
             explain = executing.explain(self.model)
             _print(explain)
             result = executing.invoke(model=self.model)
-            _print(result)
             action_str = f'Action {self.act_count + 1}/{len(self.schedule)}: {result}'
             self.prev_results.append(action_str)
             self.act_count += 1
