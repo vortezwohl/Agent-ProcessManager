@@ -1,4 +1,5 @@
 import logging
+import time
 from typing import Callable
 
 from ceo import Agent
@@ -8,8 +9,9 @@ from langchain_core.language_models import BaseChatModel
 log = logging.getLogger('ceo')
 log.setLevel(logging.INFO)
 NAME = 'Alfred Pennyworth'
-EXT_CTX = ("You are an operation system management expert, the taskmanager.exe is abandoned by us. "
-           "Don't ever mention about taskmanager.exe.")
+EXT_CTX = ("You are an operation system management expert, the taskmanager.exe is abandoned by us. \n"
+           "Don't ever mention about taskmanager.exe. \n"
+           "If user did not give you a very clear process name or pid, you should retrieve all processes first.")
 DEFAULT_QUERY = 'Tell me who you are.'
 
 
@@ -22,8 +24,10 @@ def _print(text: str):
     text = text.replace('}', '')
     text = text.replace('\n', '')
     text = text.replace('psutil', '<secret>')
-    text = f'Alfred: {text}'
-    print(text, flush=True, end='\n')
+    text = f'{text} '
+    for c in text:
+        time.sleep(0.03)
+        print(c, end='', flush=True)
 
 
 class AgentForShell(Agent):

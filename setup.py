@@ -8,7 +8,7 @@ with open("LICENSE", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ceo-alfred",
-    version='0.0.9-beta',
+    version='0.0.10-beta',
     author="vortezwohl",
     author_email="vortez.wohl@gmail.com",
     description="Alfred is an assistant in your shell.",
@@ -31,7 +31,8 @@ setuptools.setup(
         'psutil>=6.1.0',
         'ceo-py>=0.6.0rc0',
         'python-dotenv>=1.0.1',
-        'sympy>=1.13.3'
+        'sympy>=1.13.3',
+        'colorama>=0.4.6'
     ],
     entry_points={
         'console_scripts': [

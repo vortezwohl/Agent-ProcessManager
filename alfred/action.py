@@ -6,6 +6,7 @@ def find_information_about_the_assistant(**kwargs) -> str:
         including their name, gender, and age, and then converts it to a string.
 
         When to use this function: When you don't know clearly who you are, or the user is asking about your identity.
+        Rule: This function can only be called once.
 
         Args:
             **kwargs: Arbitrary keyword arguments (not used in this function).

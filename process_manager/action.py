@@ -64,12 +64,12 @@ def show_specifications_of_current_computer(**kwargs) -> str:
 
 def find_all_processes(**kwargs) -> str:
     """
-        Retrieves and displays information about all running processes on the system,
-        if you are not clear about which process you are looking for, you should retrieve all processes first.
+        Retrieves and displays information about all running processes on the system.
+        When to use: If you are not clear about which process you are looking for.
 
         This function iterates over all processes, collecting details
-        such as process ID, name, user, status, creation time, CPU usage, and
-        memory usage. The collected data is stored in a dictionary and returned as a
+        such as process ID, name, user, status, creation time,
+        The collected data is stored in a dictionary and returned as a
         string representation.
 
         Args:
@@ -79,16 +79,14 @@ def find_all_processes(**kwargs) -> str:
             str: A string representation of a dictionary containing process information.
     """
     all_processes = dict()
-    for proc in psutil.process_iter(['pid', 'name', 'status']):
+    for proc in psutil.process_iter():
         try:
             all_processes[proc.name()] = {
                 'pid': proc.pid,
                 'name': proc.name(),
                 'user': proc.username(),
                 'status': proc.status(),
-                'create_time': proc.create_time(),
-                'cpu_percent': proc.cpu_percent(interval=0.1),
-                'memory_percent': proc.memory_percent()
+                'create_time': proc.create_time()
             }
         except (psutil.AccessDenied, psutil.NoSuchProcess, psutil.ZombieProcess):
             pass
@@ -192,7 +190,7 @@ def find_process_by_name(name: str) -> str:
     result = dict()
     for proc in psutil.process_iter(['name']):
         try:
-            if proc.name() == name:
+            if proc.name() == name or proc.name().__contains__(name):
                 result[proc.name()] = {
                     'pid': proc.pid,
                     'name': proc.name(),

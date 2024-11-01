@@ -1,5 +1,7 @@
 import sys
 
+from colorama import Style, Fore
+
 from process_manager.agent import process_manager
 from alfred.action import find_information_about_the_assistant
 
@@ -14,6 +16,7 @@ def main():
             query += arg
         process_manager.assign(query)
     try:
+        print(f'{Fore.LIGHTYELLOW_EX}{Style.BRIGHT}Alfred: {Style.RESET_ALL}', flush=True, end='')
         process_manager.just_do_it()
     except KeyboardInterrupt:
         pass
